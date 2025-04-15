@@ -1,0 +1,32 @@
+{
+ "name": "consultancy-node",
+ "version": "1.0.0",
+ "description": "",
+ "homepage": "https://github.com/balaraju404/consultancy-node#readme",
+ "bugs": {
+  "url": "https://github.com/balaraju404/consultancy-node/issues"
+ },
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/balaraju404/consultancy-node.git"
+ },
+ "license": "ISC",
+ "author": "Balaraju Gandham",
+ "type": "commonjs",
+ "main": "app.js",
+ "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "start": "node app.js",
+  "dev": "nodemon app.js"
+ },
+ "dependencies": {
+  "@cs7player/scrap-node-lib": "^0.0.1",
+  "cors": "^2.8.5",
+  "dotenv": "^16.5.0",
+  "express": "^5.1.0",
+  "express-validator": "^7.2.1",
+  "mongoose": "^8.13.2",
+  "nodemon": "^3.1.9",
+  "path": "^0.12.7"
+ }
+}
