@@ -1,4 +1,4 @@
-const connectDB = require("./conn");
+const { connectDB } = require("./conn");
 
 exports.getDetails = async (collection, pipeline) => {
  const conn = await connectDB();
