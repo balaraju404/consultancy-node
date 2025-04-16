@@ -61,6 +61,7 @@ exports.update = async (reqParams) => {
 }
 exports.details = async (reqParams) => {
  try {
+  const isNeedPwd = reqParams["is_password"] || 0
   const whr = {}
   if (reqParams["user_id"]) whr["_id"] = getObjectId(reqParams["user_id"])
   if (reqParams["fname"]) whr["fname"] = reqParams["fname"]
@@ -72,12 +73,8 @@ exports.details = async (reqParams) => {
 
   const pipeline = [
    { $match: whr },
-   { $addFields: { "user_id": "$_id" } },
-   {
-    $project: {
-     "password": 0
-    }
-   }
+   { $addFields: { user_id: "$_id", ...(isNeedPwd == 1 ? { password: "$password" } : {}) } },
+   { $project: { password: 0 } }
   ]
   const result = await dbHelper.getDetails(USERS_COLL, pipeline)
   return result
