@@ -14,16 +14,18 @@ router.route("/")
    try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-     return res.status(422).json({ errors: errors.array() });
+     return res.status(VALIDATION_ERROR_CODE).json({ errors: errors.array() });
     }
     await userCtrl.add(req, res)
    } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(SERVER_ERROR_CODE).json({ message: error.message });
    }
   }
  ])
 
  .put([
+  check("user_id").not().isEmpty().withMessage('User ID is required'),
+  check("user_id").isMongoId().length({ min: 24 }).withMessage('Invalid User ID'),
   check('fname').optional().not().isEmpty().withMessage('First Name cannot be empty if provided'),
   check('lname').optional().not().isEmpty().withMessage('Last Name cannot be empty if provided'),
   check('email').optional().isEmail().withMessage('Invalid email format if provided'),
@@ -34,13 +36,28 @@ router.route("/")
    try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-     return res.status(422).json({ errors: errors.array() });
+     return res.status(VALIDATION_ERROR_CODE).json({ errors: errors.array() });
     }
     await userCtrl.update(req, res)
    } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(SERVER_ERROR_CODE).json({ message: error.message });
    }
   }
  ]);
+
+router.post("/details", [
+ check("user_id").optional().isMongoId().length({ min: 24 }).withMessage('Invalid User ID'),
+ check("email").optional().isEmail().withMessage('Invalid email format'),
+], async (req, res, next) => {
+ try {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+   return res.status(VALIDATION_ERROR_CODE).json({ errors: errors.array() });
+  }
+  await userCtrl.details(req, res)
+ } catch (error) {
+  res.status(SERVER_ERROR_CODE).json({ message: error.message });
+ }
+})
 
 module.exports = router;
