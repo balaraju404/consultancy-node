@@ -8,7 +8,7 @@ router.route("/")
   check('lname').not().isEmpty().withMessage('Last Name is required'),
   check('email').isEmail().withMessage('Invalid email'),
   check('mobile').not().isEmpty().withMessage('Mobile Number is required'),
-  check('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
+  check('password').isLength({ min: 6 }).withMessage('Password must be at least 8 characters long'),
 
   async (req, res) => {
    try {
@@ -30,7 +30,7 @@ router.route("/")
   check('lname').optional().not().isEmpty().withMessage('Last Name cannot be empty if provided'),
   check('email').optional().isEmail().withMessage('Invalid email format if provided'),
   check('mobile').optional().not().isEmpty().withMessage('Mobile Number cannot be empty if provided'),
-  check('password').optional().isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
+  check('password').optional().isLength({ min: 6 }).withMessage('Password must be at least 8 characters long'),
 
   async (req, res) => {
    try {

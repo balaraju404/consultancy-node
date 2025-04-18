@@ -19,13 +19,13 @@ exports.add = async (reqParams) => {
    "email": reqParams["email"] || "",
    "mobile": reqParams["mobile"] || "",
    "password": hashedPassword,
-   "role": reqParams["role_id"] || 2,
+   "role_id": reqParams["role_id"] || 2,
    "status": reqParams["status"] || 1,
    "created_at": new Date(),
    "created_by": reqParams["created_by"] || "System",
   }
   const result = await dbHelper.insertOne(USERS_COLL, insertData)
-  return { "status": true, "msg": "User added successfully", "data": result }
+  return { "status": true, "msg": "User created successfully", "data": result }
  } catch (error) {
   throw error
  }
@@ -48,7 +48,7 @@ exports.update = async (reqParams) => {
   if (reqParams["lname"]) updateData["lname"] = reqParams["lname"]
   if (reqParams["email"]) updateData["email"] = reqParams["email"]
   if (reqParams["mobile"]) updateData["mobile"] = reqParams["mobile"]
-  if (reqParams["role_id"]) updateData["role"] = reqParams["role_id"]
+  if (reqParams["role_id"]) updateData["role_id"] = reqParams["role_id"]
   if (reqParams["status"]) updateData["status"] = reqParams["status"]
   updateData["updated_date"] = new Date()
   updateData["updated_by"] = reqParams["updated_by"] || "System"
@@ -68,7 +68,7 @@ exports.details = async (reqParams) => {
   if (reqParams["lname"]) whr["lname"] = reqParams["lname"]
   if (reqParams["email"]) whr["email"] = reqParams["email"]
   if (reqParams["mobile"]) whr["mobile"] = reqParams["mobile"]
-  if (reqParams["role_id"]) whr["role"] = reqParams["role_id"]
+  if (reqParams["role_id"]) whr["role_id"] = reqParams["role_id"]
   if (reqParams["status"]) whr["status"] = reqParams["status"]
 
   const pipeline = [
@@ -87,7 +87,7 @@ const checkUser = async (email, mobile, user_id = null) => {
  try {
   const whr = { "$or": [{ "email": email }, { "mobile": mobile }] }
   if (user_id) whr["_id"] = { "$ne": getObjectId(user_id) }
-  const result = await dbHelper.getDetails(USERS_COLL, whr)
+  const result = await dbHelper.getDetails(USERS_COLL, [{ "$match": whr }])
   return result
  } catch (error) {
   throw error
