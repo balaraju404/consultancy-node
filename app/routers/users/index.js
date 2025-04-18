@@ -25,7 +25,7 @@ router.route("/")
 
  .put([
   check("user_id").not().isEmpty().withMessage('User ID is required'),
-  check("user_id").isMongoId().length({ min: 24 }).withMessage('Invalid User ID'),
+  check("user_id").isMongoId().withMessage('Invalid User ID'),
   check('fname').optional().not().isEmpty().withMessage('First Name cannot be empty if provided'),
   check('lname').optional().not().isEmpty().withMessage('Last Name cannot be empty if provided'),
   check('email').optional().isEmail().withMessage('Invalid email format if provided'),
@@ -46,7 +46,7 @@ router.route("/")
  ]);
 
 router.post("/details", [
- check("user_id").optional().isMongoId().length({ min: 24 }).withMessage('Invalid User ID'),
+ check("user_id").optional().isMongoId().withMessage('Invalid User ID'),
  check("email").optional().isEmail().withMessage('Invalid email format'),
 ], async (req, res, next) => {
  try {
