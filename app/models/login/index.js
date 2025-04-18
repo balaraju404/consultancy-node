@@ -14,6 +14,7 @@ exports.password = async (reqParams) => {
   if (checkPwdStatus == false) {
    return { "status": false, "msg": "Invalid password", "status_code": AUTH_ERROR_CODE }
   } else {
+   delete userData[0]["hash_password"]
    return { "status": true, "msg": "Login successfull!", "status_code": SUCCESS_CODE, "data": userData[0] }
   }
  } catch (error) {

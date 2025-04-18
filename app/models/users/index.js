@@ -74,7 +74,7 @@ exports.details = async (reqParams) => {
   const pipeline = [
    { $match: whr },
    { $addFields: { user_id: "$_id", ...(isNeedPwd == 1 ? { hash_password: "$password" } : {}) } },
-   { $project: { password: 0 } }
+   { $project: { _id: 0, password: 0 } }
   ]
   const result = await dbHelper.getDetails(USERS_COLL, pipeline)
   return result
