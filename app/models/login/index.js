@@ -9,12 +9,12 @@ exports.password = async (reqParams) => {
   if (userData.length == 0) {
    return { "status": false, "msg": "User not found", "status_code": NOT_FOUND_CODE }
   }
-  const userPwd = userData[0]["password"]
+  const userPwd = userData[0]["hash_password"]
   const checkPwdStatus = await checkPassword(reqParams["password"], userPwd)
   if (checkPwdStatus == false) {
    return { "status": false, "msg": "Invalid password", "status_code": AUTH_ERROR_CODE }
   } else {
-   return { "status": true, "msg": "Password is correct", "status_code": SUCCESS_CODE, "data": userData[0] }
+   return { "status": true, "msg": "Login successfull!", "status_code": SUCCESS_CODE, "data": userData[0] }
   }
  } catch (error) {
   throw error
