@@ -7,6 +7,9 @@ if (IS_PROD == 0) {
 }
 require("dotenv").config();
 
+global.PORT = process.env.PORT
+global.WHITELIST_DOMAIN = process.env.WHITELIST_DOMAIN
+
 global.MONGO_DB_USER = process.env.MONGO_DB_USER
 global.MONGO_DB_USER_PWD = process.env.MONGO_DB_USER_PWD
 global.MONGO_DB_HOST = process.env.MONGO_DB_HOST

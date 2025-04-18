@@ -2,8 +2,26 @@ require("./app/utils/config");
 require("./app/utils/constants");
 const { connectDB } = require("./app/mongoose")
 
+const cors = require("cors");
 const express = require("express");
 const app = express();
+
+const whiteListDomains = WHITELIST_DOMAIN.split(",")
+const corsOptions = {
+ origin: (origin, callback) => {
+  if (whiteListDomains.includes(origin)) {
+   callback(null, true);
+  } else {
+   callback(new Error("Not allowed by CORS"));
+  }
+ },
+ // credentials: true,
+ // optionsSuccessStatus: 200,
+ // methods: ["GET", "POST", "PUT", "DELETE"],
+ // allowedHeaders: ["Content-Type", "Authorization"],
+ // exposedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 
 app.use(express.json()); // For JSON payloads
 app.use(express.urlencoded({ extended: true })); // For form data
