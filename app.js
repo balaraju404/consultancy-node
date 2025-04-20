@@ -7,11 +7,9 @@ const express = require("express");
 const app = express();
 
 const whiteListDomains = WHITELIST_DOMAIN.split(",")
-console.log(whiteListDomains);
 
 const corsOptions = {
  origin: (origin, callback) => {
-  console.log(origin);
   
   if (whiteListDomains.includes(origin)) {
    callback(null, true);
