@@ -30,4 +30,4 @@ global.VALIDATION_ERROR_MESSAGE = "Validation failed. Please check your input.";
 global.SERVER_ERROR_MESSAGE = "Internal server error. Please try again later.";
 global.SERVICE_UNAVAILABLE_MESSAGE = "Service is temporarily unavailable. Please try again later.";
 
-
+global.TIMEZONE = "Asia/Kolkata"

@@ -34,3 +34,7 @@ exports.deleteMany = async (collection, filter) => {
  const conn = await connectDB();
  return await conn.collection(collection).deleteMany(filter);
 };
+
+exports.dateToString = (key, format, timezone = TIMEZONE) => {
+ return { $dateToString: { format, date: `$${key}`, timezone } };
+}

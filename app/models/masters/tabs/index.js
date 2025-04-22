@@ -1,5 +1,5 @@
 const dbHelper = require("../../../utils/db-helper")
-const { getObjectId } = require("../../../utils/helper")
+const { getObjectId, dateToString } = require("../../../utils/helper")
 
 exports.add = async (reqParams) => {
  try {
@@ -44,7 +44,7 @@ exports.details = async (reqParams) => {
 
   const pipeline = [
    { $match: whr },
-   { $addFields: { tab_id: "$_id" } },
+   { $addFields: { tab_id: "$_id", "created_date": dateToString("created_date", "%d/%b/%Y %H:%M"), "modified_date": dateToString("modified_date", "%d/%b/%Y %H:%M") } },
    { $project: { _id: 0 } }
   ]
   const result = await dbHelper.getDetails(TABS_COLL, pipeline)

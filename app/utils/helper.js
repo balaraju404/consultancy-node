@@ -1,5 +1,5 @@
 const { hashPassword, checkPassword } = require("@cs7player/scrap-node-lib").pbkdf
-const { getObjectId } = require("../mongoose")
+const { getObjectId, mongoHelper } = require("../mongoose")
 
 exports.hashPassword = async (password) => {
  try {
@@ -26,4 +26,8 @@ exports.getObjectId = (id) => {
  } catch (error) {
   throw error
  }
+}
+
+exports.dateToString = (key, format, timezone = TIMEZONE) => {
+ return mongoHelper.dateToString(key, format, timezone)
 }
