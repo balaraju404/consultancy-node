@@ -55,5 +55,19 @@ router.post("/details", [
   res.status(SERVER_ERROR_CODE).json({ message: error.message });
  }
 })
+router.post("/delete", [
+ check("tab_id").not().isEmpty().withMessage('Tab ID is required'),
+ check("tab_id").isMongoId().withMessage('Invalid Tab ID'),
+], async (req, res, next) => {
+ try {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+   return res.status(VALIDATION_ERROR_CODE).json({ errors: errors.array() });
+  }
+  await tabsCtrl.del(req, res)
+ } catch (error) {
+  res.status(SERVER_ERROR_CODE).json({ message: error.message });
+ }
+})
 
 module.exports = router;

@@ -53,3 +53,13 @@ exports.details = async (reqParams) => {
   throw error
  }
 }
+
+exports.del = async (reqParams) => {
+ try {
+  const whr = { "_id": getObjectId(reqParams["tab_id"]) }
+  const result = await dbHelper.deleteOne(TABS_COLL, whr)
+  return { "status": true, "msg": "Tab deleted successfully", "data": result }
+ } catch (error) {
+  throw error
+ }
+}
