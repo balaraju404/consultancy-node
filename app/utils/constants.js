@@ -1,4 +1,6 @@
 global.USERS_COLL = "users"
+global.TABS_COLL = "tabs"
+global.ROLE_WISE_TABS_COLL = "role_wise_tabs"
 
 
 // Status codes
