@@ -1,5 +1,5 @@
-const dbHelper = require("../../utils/db-helper")
-const { getObjectId } = require("../../utils/helper")
+const dbHelper = require("../../../utils/db-helper")
+const { getObjectId } = require("../../../utils/helper")
 
 exports.add = async (reqParams) => {
  try {
