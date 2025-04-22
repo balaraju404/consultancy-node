@@ -21,7 +21,7 @@ exports.add = async (reqParams) => {
    "password": hashedPassword,
    "role_id": reqParams["role_id"] || 2,
    "status": reqParams["status"] || 1,
-   "created_at": new Date(),
+   "created_date": new Date(),
    "created_by": reqParams["created_by"] || "System",
   }
   const result = await dbHelper.insertOne(USERS_COLL, insertData)
@@ -50,8 +50,8 @@ exports.update = async (reqParams) => {
   if (reqParams["mobile"]) updateData["mobile"] = reqParams["mobile"]
   if (reqParams["role_id"]) updateData["role_id"] = reqParams["role_id"]
   if (reqParams["status"]) updateData["status"] = reqParams["status"]
-  updateData["updated_date"] = new Date()
-  updateData["updated_by"] = reqParams["updated_by"] || "System"
+  updateData["modified_date"] = new Date()
+  updateData["modified_by"] = reqParams["modified_by"] || "System"
   const whr = { "_id": getObjectId(reqParams["user_id"]) }
   const result = await dbHelper.updateOne(USERS_COLL, whr, updateData)
   return { "status": true, "msg": "User updated successfully", "data": result }

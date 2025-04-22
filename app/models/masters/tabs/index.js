@@ -9,7 +9,7 @@ exports.add = async (reqParams) => {
    "tab_link": reqParams["tab_link"] || "",
    "cat_info": reqParams["cat_info"] || "",
    "status": reqParams["status"] || 1,
-   "created_at": new Date(),
+   "created_date": new Date(),
    "created_by": reqParams["created_by"] || "System",
   }
   const result = await dbHelper.insertOne(TABS_COLL, insertData)
@@ -26,8 +26,8 @@ exports.update = async (reqParams) => {
   if (reqParams["tab_link"]) updateData["tab_link"] = reqParams["tab_link"]
   if (reqParams["cat_info"]) updateData["cat_info"] = reqParams["cat_info"]
   if (reqParams["status"]) updateData["status"] = reqParams["status"]
-  updateData["updated_date"] = new Date()
-  updateData["updated_by"] = reqParams["updated_by"] || "System"
+  updateData["modified_date"] = new Date()
+  updateData["modified_by"] = reqParams["modified_by"] || "System"
   const whr = { "_id": getObjectId(reqParams["tab_id"]) }
   const result = await dbHelper.updateOne(TABS_COLL, whr, updateData)
   return { "status": true, "msg": "Tab details updated", "data": result }

@@ -32,8 +32,8 @@ exports.otp = async (reqParams) => {
   if (reqParams["mobile"]) updateData["mobile"] = reqParams["mobile"]
   if (reqParams["role_id"]) updateData["role"] = reqParams["role_id"]
   if (reqParams["status"]) updateData["status"] = reqParams["status"]
-  updateData["updated_date"] = new Date()
-  updateData["updated_by"] = reqParams["updated_by"] || "System"
+  updateData["modified_date"] = new Date()
+  updateData["modified_by"] = reqParams["modified_by"] || "System"
   const whr = { "_id": getObjectId(reqParams["user_id"]) }
   const result = await dbHelper.updateOne(USERS_COLL, whr, updateData)
   return result
