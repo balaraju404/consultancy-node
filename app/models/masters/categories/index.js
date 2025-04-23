@@ -41,7 +41,7 @@ exports.details = async (reqParams) => {
 
   const pipeline = [
    { $match: whr },
-   { $addFields: { cat_id: "$_id", "created_date": dateToString("created_date", "%d/%b/%Y %H:%M"), "modified_date": dateToString("modified_date", "%d/%b/%Y %H:%M") } },
+   { $addFields: { "cat_id": "$_id", "created_date": dateToString("created_date", "%d/%b/%Y %H:%M"), "modified_date": dateToString("modified_date", "%d/%b/%Y %H:%M") } },
    { $project: { _id: 0 } }
   ]
   const result = await dbHelper.getDetails(CATEGORIES_COLL, pipeline)
