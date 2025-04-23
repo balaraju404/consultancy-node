@@ -23,8 +23,8 @@ router.route("/")
  ])
 
  .put([
-  check("tab_id").not().isEmpty().withMessage('User ID is required'),
-  check("tab_id").isMongoId().withMessage('Invalid User ID'),
+  check("tab_id").not().isEmpty().withMessage('Tab ID is required'),
+  check("tab_id").isMongoId().withMessage('Invalid Tab ID'),
   check('tab_name').optional().not().isEmpty().withMessage('Tab Name is required'),
   check('tab_icon').optional().not().isEmpty().withMessage('Tab Icon is required'),
   check('tab_link').optional().not().isEmpty().withMessage('Tab Link is required'),
