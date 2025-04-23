@@ -7,7 +7,7 @@ exports.add = async (reqParams) => {
    "tab_name": reqParams["tab_name"] || "",
    "tab_icon": reqParams["tab_icon"] || "",
    "tab_link": reqParams["tab_link"] || "",
-   "cat_info": reqParams["cat_info"] || "",
+   "cat_id": getObjectId(reqParams["cat_id"]) || "",
    "status": reqParams["status"] || 1,
    "created_date": new Date(),
    "created_by": reqParams["created_by"] || "System",
@@ -24,7 +24,7 @@ exports.update = async (reqParams) => {
   if (reqParams["tab_name"]) updateData["tab_name"] = reqParams["tab_name"]
   if (reqParams["tab_icon"]) updateData["tab_icon"] = reqParams["tab_icon"]
   if (reqParams["tab_link"]) updateData["tab_link"] = reqParams["tab_link"]
-  if (reqParams["cat_info"]) updateData["cat_info"] = reqParams["cat_info"]
+  if (reqParams["cat_id"]) updateData["cat_id"] = getObjectId(reqParams["cat_id"])
   if (reqParams["status"]) updateData["status"] = reqParams["status"]
   updateData["modified_date"] = new Date()
   updateData["modified_by"] = reqParams["modified_by"] || "System"
@@ -35,17 +35,36 @@ exports.update = async (reqParams) => {
   throw error
  }
 }
+
 exports.details = async (reqParams) => {
  try {
   const status = reqParams["status"] || 1
   const whr = { "status": status }
   if (reqParams["tab_id"]) whr["_id"] = getObjectId(reqParams["tab_id"])
-  if (reqParams["cat_id"]) whr["cat_info.cat_id"] = reqParams["cat_id"]
+  if (reqParams["cat_id"]) whr["cat_id"] = getObjectId(reqParams["cat_id"])
 
   const pipeline = [
    { $match: whr },
-   { $addFields: { tab_id: "$_id", "created_date": dateToString("created_date", "%d/%b/%Y %H:%M"), "modified_date": dateToString("modified_date", "%d/%b/%Y %H:%M") } },
-   { $project: { _id: 0 } }
+   { $lookup: { from: CATEGORIES_COLL, localField: "cat_id", foreignField: "_id", as: "cat_info" } },
+   {
+    $addFields: {
+     "tab_id": "$_id",
+     "cat_info": { $arrayElemAt: ["$cat_info", 0] },
+     "cat_info.cat_id": "$cat_info.cat_id",
+     "created_date": dateToString("created_date", "%d/%b/%Y %H:%M"),
+     "modified_date": dateToString("modified_date", "%d/%b/%Y %H:%M")
+    }
+   },
+   {
+    $project: {
+     "_id": 0,
+     "cat_info._id": 0,
+     "cat_info.created_date": 0,
+     "cat_info.created_by": 0,
+     "cat_info.modified_date": 0,
+     "cat_info.modified_by": 0,
+    }
+   }
   ]
   const result = await dbHelper.getDetails(TABS_COLL, pipeline)
   return result

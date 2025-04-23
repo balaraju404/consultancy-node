@@ -7,8 +7,8 @@ router.route("/")
   check('tab_name').not().isEmpty().withMessage('Tab Name is required'),
   check('tab_icon').not().isEmpty().withMessage('Tab Icon is required'),
   check('tab_link').not().isEmpty().withMessage('Tab Link is required'),
-  check("cat_info").isObject().withMessage("Category information must be an object"),
-
+  check("cat_id").not().isEmpty().withMessage('Category ID is required'),
+  check("cat_id").isMongoId().withMessage('Invalid Category ID'),
   async (req, res) => {
    try {
     const errors = validationResult(req);
@@ -28,8 +28,7 @@ router.route("/")
   check('tab_name').optional().not().isEmpty().withMessage('Tab Name is required'),
   check('tab_icon').optional().not().isEmpty().withMessage('Tab Icon is required'),
   check('tab_link').optional().not().isEmpty().withMessage('Tab Link is required'),
-  check("cat_info").optional().isObject().withMessage("Category information must be an object"),
-
+  check("cat_id").optional().isMongoId().withMessage('Invalid Category ID'),
   async (req, res) => {
    try {
     const errors = validationResult(req);
