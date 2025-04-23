@@ -50,11 +50,11 @@ exports.details = async (reqParams) => {
     $addFields: {
      "tab_id": "$_id",
      "cat_info": { $arrayElemAt: ["$cat_info", 0] },
-     "cat_info.cat_id": "$cat_info.cat_id",
      "created_date": dateToString("created_date", "%d/%b/%Y %H:%M"),
      "modified_date": dateToString("modified_date", "%d/%b/%Y %H:%M")
     }
    },
+   { $addFields: { "cat_info.cat_id": "$cat_info._id" } },
    {
     $project: {
      "_id": 0,
