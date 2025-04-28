@@ -32,8 +32,6 @@ const router = require("./app/routers"); // Routes
 app.use("/", router);
 
 const port = process.env.PORT || 3000;
-console.log(port);
-
 app.listen(port, async () => {
  try {
   // Await DB connection setup
